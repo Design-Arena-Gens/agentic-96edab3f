@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Benchmarks Tracker | تتبع معايير الذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="8" fill="url(#gradient)"/>
+                        <path d="M20 10L28 16V24L20 30L12 24V16L20 10Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>AI Benchmarks</span>
+                </div>
+
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">الرئيسية</a>
+                    <a href="#leaderboard" class="nav-link">Leaderboard</a>
+                    <a href="#compare" class="nav-link">المقارنة</a>
+                    <a href="#stats" class="nav-link">الإحصائيات</a>
+                    <a href="#about" class="nav-link">حول المنصة</a>
+                </nav>
+
+                <div class="header-actions">
+                    <div class="search-box">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="ابحث عن نموذج...">
+                    </div>
+                    <button class="theme-toggle" id="themeToggle">
+                        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">منصة تتبع معايير الذكاء الاصطناعي</h1>
+                <p class="hero-subtitle">
+                    تتبع وقارن أداء أحدث نماذج الذكاء الاصطناعي عبر مجموعة شاملة من الاختبارات المعيارية
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalModels">42</div>
+                        <div class="stat-label">نموذج ذكاء اصطناعي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalBenchmarks">5</div>
+                        <div class="stat-label">اختبار معياري</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="lastUpdate">اليوم</div>
+                        <div class="stat-label">آخر تحديث</div>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="document.getElementById('leaderboard').scrollIntoView({behavior: 'smooth'})">
+                    استكشف النماذج
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4v12m-6-6l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="leaderboard-section" id="leaderboard">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🏆 لوحة المتصدرين</h2>
+                <p class="section-subtitle">أفضل نماذج الذكاء الاصطناعي حسب الأداء الشامل</p>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="available">متاح</button>
+                <button class="filter-btn" data-filter="beta">تجريبي</button>
+                <button class="filter-btn" data-filter="soon">قريباً</button>
+            </div>
+
+            <div class="table-container">
+                <table class="leaderboard-table" id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="rank">#</th>
+                            <th data-sort="name">النموذج</th>
+                            <th data-sort="overall">الدرجة الإجمالية</th>
+                            <th data-sort="mmlu">MMLU<span class="tooltip">?<span class="tooltiptext">معرفة عامة متعددة المجالات</span></span></th>
+                            <th data-sort="humaneval">HumanEval<span class="tooltip">?<span class="tooltiptext">قدرات البرمجة</span></span></th>
+                            <th data-sort="gsm8k">GSM8K<span class="tooltip">?<span class="tooltiptext">مسائل رياضية</span></span></th>
+                            <th data-sort="hellaswag">HellaSwag<span class="tooltip">?<span class="tooltiptext">الاستدلال المنطقي</span></span></th>
+                            <th data-sort="truthful">TruthfulQA<span class="tooltip">?<span class="tooltiptext">صدقية الإجابات</span></span></th>
+                            <th data-sort="updated">آخر تحديث</th>
+                            <th data-sort="status">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare Section -->
+    <section class="compare-section" id="compare">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📊 مقارنة النماذج</h2>
+                <p class="section-subtitle">قارن بين نماذج مختلفة جنباً إلى جنب</p>
+            </div>
+
+            <div class="compare-container">
+                <div class="model-selector">
+                    <select id="compareModel1" class="model-select">
+                        <option value="">اختر النموذج الأول</option>
+                    </select>
+                    <span class="vs-text">VS</span>
+                    <select id="compareModel2" class="model-select">
+                        <option value="">اختر النموذج الثاني</option>
+                    </select>
+                    <button class="compare-btn" id="compareBtn">مقارنة</button>
+                </div>
+
+                <div class="comparison-result" id="comparisonResult" style="display: none;">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📈 الإحصائيات</h2>
+                <p class="section-subtitle">نظرة شاملة على أداء النماذج</p>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>توزيع الدرجات الإجمالية</h3>
+                    <canvas id="overallDistribution"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>متوسط الدرجات حسب الاختبار</h3>
+                    <canvas id="benchmarkAverages"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">ℹ️ حول المنصة</h2>
+            </div>
+
+            <div class="about-content">
+                <div class="about-card">
+                    <h3>🎯 هدفنا</h3>
+                    <p>توفير منصة شاملة وموثوقة لتتبع ومقارنة أداء نماذج الذكاء الاصطناعي المختلفة عبر مجموعة من الاختبارات المعيارية المعترف بها عالمياً.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3>📋 الاختبارات المعيارية</h3>
+                    <ul>
+                        <li><strong>MMLU:</strong> اختبار المعرفة العامة عبر 57 مجالاً مختلفاً</li>
+                        <li><strong>HumanEval:</strong> تقييم قدرات البرمجة وكتابة الأكواد</li>
+                        <li><strong>GSM8K:</strong> حل المسائل الرياضية على مستوى المدرسة الابتدائية</li>
+                        <li><strong>HellaSwag:</strong> قياس القدرة على الاستدلال المنطقي</li>
+                        <li><strong>TruthfulQA:</strong> تقييم صدقية ودقة الإجابات</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h3>🔄 التحديثات</h3>
+                    <p>يتم تحديث البيانات بشكل دوري لضمان دقة المعلومات. آخر تحديث: <strong id="aboutLastUpdate">5 نوفمبر 2025</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AI Benchmarks Tracker. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
